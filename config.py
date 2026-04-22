@@ -3,7 +3,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent
 WORKSPACE_ROOT = Path(os.getenv("AGENT_WORKSPACE_ROOT", BASE_DIR)).resolve()
-MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4.1-mini")
+MODEL_NAME = os.getenv("MODEL_NAME", "deepseek-chat")
 MAX_TURNS = int(os.getenv("MAX_TURNS", "8"))
 HISTORY_FILE = Path(os.getenv("HISTORY_FILE", BASE_DIR / "chat_history.json"))
 SYSTEM_PROMPT = """你是一个可调用本地工具的 Python 智能体助手。\n""" \

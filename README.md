@@ -25,7 +25,7 @@ pip install -r requirements.txt
 可选配置：
 
 - `OPENAI_BASE_URL`：切换到兼容 OpenAI 协议的平台（如部分 DeepSeek 网关）
-- `MODEL_NAME`：默认 `gpt-4.1-mini`
+- `MODEL_NAME`：默认 `deepseek-chat`（对应 DeepSeek V3.1）
 - `MAX_TURNS`：默认 `8`
 - `AGENT_WORKSPACE_ROOT`：工具允许访问的根目录，默认当前项目目录
 - `HISTORY_FILE`：对话历史文件，默认 `chat_history.json`
@@ -34,7 +34,8 @@ PowerShell 示例：
 
 ```powershell
 $env:OPENAI_API_KEY = "你的Key"
-$env:MODEL_NAME = "gpt-4.1-mini"
+$env:OPENAI_BASE_URL = "https://api.deepseek.com"
+$env:MODEL_NAME = "deepseek-chat"
 ```
 
 ## 3. 运行
