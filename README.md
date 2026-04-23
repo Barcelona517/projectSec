@@ -54,6 +54,16 @@ python main.py
 
 输入 `exit` 退出。
 
+## 3.1 网页聊天界面（类似豆包/DeepSeek）
+
+安装依赖后运行：
+
+```bash
+python web_ui.py
+```
+
+默认会在本机启动 `http://127.0.0.1:7860`，可在浏览器中连续多轮对话。
+
 ## 4. 与作业要求对应
 
 - 必做 1（模型接入+多轮）：`main.py` + `llm_client.py`
