@@ -30,6 +30,14 @@ pip install -r requirements.txt
 - `AGENT_WORKSPACE_ROOT`：工具允许访问的根目录，默认当前项目目录
 - `HISTORY_FILE`：对话历史文件，默认 `chat_history.json`
 
+推荐方式（写在项目根目录 `.env` 文件中）：
+
+OPENAI_API_KEY=你的Key
+OPENAI_BASE_URL=https://api.deepseek.com
+MODEL_NAME=deepseek-chat
+
+程序启动时会自动读取 `.env`（已集成 python-dotenv）。
+
 PowerShell 示例：
 
 ```powershell

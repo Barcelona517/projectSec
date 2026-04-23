@@ -1,7 +1,10 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(dotenv_path=BASE_DIR / ".env", override=False)
+
 WORKSPACE_ROOT = Path(os.getenv("AGENT_WORKSPACE_ROOT", BASE_DIR)).resolve()
 MODEL_NAME = os.getenv("MODEL_NAME", "deepseek-chat")
 MAX_TURNS = int(os.getenv("MAX_TURNS", "8"))
