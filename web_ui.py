@@ -438,7 +438,7 @@ def main() -> None:
         white-space: pre-wrap;
     }
     .ai-answer {
-        color: #111;
+        color: var(--body-text-color, #eaeaea);
         font-size: 15px;
         white-space: pre-wrap;
     }
