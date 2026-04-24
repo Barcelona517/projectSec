@@ -6,6 +6,7 @@ from html import escape
 import io
 import json
 import os
+import re
 import socket
 from uuid import uuid4
 
@@ -23,11 +24,31 @@ def _now_iso() -> str:
 
 
 def _make_title_from_messages(messages: list[dict]) -> str:
+    keyword_titles = [
+        (["界面", "ui", "布局", "页面", "样式", "按钮"], "界面布局调整"),
+        (["历史", "会话", "多轮", "上下文"], "历史会话与上下文"),
+        (["读取", "read", "文件", "目录", "list"], "文件读取与浏览"),
+        (["写入", "保存", "write", "创建"], "文件写入操作"),
+        (["报错", "错误", "异常", "失败", "error"], "问题排查与修复"),
+        (["端口", "启动", "运行", "web_ui", "gradio"], "服务启动配置"),
+        (["模型", "deepseek", "api", "key"], "模型与密钥配置"),
+    ]
+
     for item in messages:
         if item.get("role") == "user":
             content = str(item.get("content", "")).strip()
             if content:
-                return content[:20] + ("..." if len(content) > 20 else "")
+                lowered = content.lower()
+                for kws, title in keyword_titles:
+                    if any(k in lowered for k in kws):
+                        return title
+
+                cleaned = re.sub(r"[\r\n]+", " ", content)
+                cleaned = re.sub(r"^(请问|请|帮我|麻烦|你能|可以|我想|能不能|是否)\s*", "", cleaned)
+                cleaned = re.sub(r"\s+", " ", cleaned).strip(" ，。！？,.!?：:;；")
+                if not cleaned:
+                    return "新对话"
+                return cleaned[:14] + ("..." if len(cleaned) > 14 else "")
     return "新对话"
 
 
@@ -84,7 +105,9 @@ def _load_or_init_conversations() -> tuple[list[dict], str]:
 def _conversation_choices(conversations: list[dict]) -> list[tuple[str, str]]:
     choices: list[tuple[str, str]] = []
     for conv in sorted(conversations, key=lambda c: c.get("updated_at", ""), reverse=True):
-        title = str(conv.get("title", "新对话"))
+        title = _make_title_from_messages(conv.get("messages", []))
+        if title == "新对话":
+            title = str(conv.get("title", "新对话"))
         updated = str(conv.get("updated_at", ""))
         stamp = updated.replace("T", " ")[:16]
         choices.append((f"{title}  ·  {stamp}", str(conv.get("id"))))
