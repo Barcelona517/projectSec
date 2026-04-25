@@ -303,10 +303,15 @@ def build_demo() -> gr.Blocks:
                     placeholder="输入内容后回车或点发送",
                     lines=3,
                     elem_id="input-box",
+                    show_label=False,
                 )
-
+                send_btn = gr.Button(
+                    "<svg t=\"171403\" class=\"send-icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"1714\" width=\"22\" height=\"22\"><path d=\"M928.8 96.6c-8.7-8.7-21.7-11.3-32.9-6.6L95.2 432.2c-12.1 5.1-19.7 17.5-18.2 30.6 1.5 13.1 12.1 23.1 25.3 24.2l353.2 29.2 29.2 353.2c1.1 13.2 11.1 23.8 24.2 25.3 1.1 0.1 2.2 0.2 3.3 0.2 11.5 0 22-6.7 26.9-18.2l342.2-800.7c4.7-11.2 2.1-24.2-6.6-32.9zM464.7 512.7l-312.2-25.8 728.2-308.6-308.6 728.2-25.8-312.2c-1-12.1-10.7-21.8-22.8-22.8z\" p-id=\"1715\"></path></svg>",
+                    elem_id="send-btn",
+                    variant="primary",
+                    scale=0,
+                )
                 with gr.Row(elem_id="actions-row"):
-                    send_btn = gr.Button("发送", variant="primary")
                     clear_btn = gr.Button("清空当前会话")
 
         conversations_state = gr.State(conversations)
@@ -396,19 +401,35 @@ def main() -> None:
     #left-panel {
         display: flex;
         flex-direction: column;
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        padding: 10px;
+        border: 1.5px solid #d0d0d0;
+        border-radius: 18px 18px 18px 18px;
+        background: #18181a;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        padding: 10px 8px 16px 8px;
         overflow: hidden;
+        position: relative;
+    }
+    #left-panel:after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 16px;
+        background: #18181a;
+        border-radius: 0 0 18px 18px;
+        box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+        z-index: 2;
     }
     #history-list {
         flex: 1 1 auto;
         min-height: 0;
         overflow-y: auto;
-        border: 1px solid #e5e5e5;
-        border-radius: 10px;
+        border: 1px solid #23232a;
+        border-radius: 12px;
+        background: #23232a;
         padding: 8px;
         margin-bottom: 8px;
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.06);
     }
     #new-chat-btn {
         flex: 0 0 auto;
@@ -421,15 +442,44 @@ def main() -> None:
     #chat-window {
         flex: 1 1 auto;
         min-height: 0;
-        border: 1px solid #ddd;
+        border: 1px solid #23232a;
         border-radius: 12px;
+        background: #19191b;
+    }
+    #input-row {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 6px;
+        margin-top: 2px;
     }
     #input-box {
-        flex: 0 0 auto;
-        margin-top: 2px;
+        flex: 1 1 auto;
+        margin-top: 0;
+        border-radius: 8px;
+        background: #23232a;
+        color: #eaeaea;
+    }
+    #send-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0;
+        background: #2d8cf0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px 0 rgba(45,140,240,0.10);
+        margin-left: 2px;
+    }
+    #send-btn .send-icon {
+        display: block;
+        margin: 0 auto;
+        fill: #fff;
     }
     #actions-row {
         flex: 0 0 auto;
+        margin-top: 2px;
     }
     .ai-thought {
         color: #888;
